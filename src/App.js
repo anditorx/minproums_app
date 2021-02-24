@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-import {Splashscreen} from './screens';
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {SignIn, Splashscreen} from './screens';
 
 const App = () => {
-  return <Splashscreen />;
+  return (
+    <NavigationContainer>
+      {/* <Splashscreen /> */}
+      <SignIn />
+    </NavigationContainer>
+  );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: 'white',
-  },
-});
 
 export default App;

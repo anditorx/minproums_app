@@ -2,22 +2,28 @@ import React from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {ILLogoSVG} from '../../assets';
 import {Gap} from '../../components';
+import {Colors, Fonts} from '../../utils';
 
 const Slashscreen = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#1dd1a1" />
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.primary} />
       <View
         style={{
-          backgroundColor: '#1dd1a1',
+          backgroundColor: Colors.primary,
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <ILLogoSVG />
         <Gap height={15} />
-        <Text style={{fontSize: 35, color: '#020202', fontWeight: 'bold'}}>
-          U-STORE
+        <Text
+          style={{
+            fontSize: 35,
+            color: Colors.black,
+            fontFamily: Fonts.boldPoppins,
+          }}>
+          USTORE
         </Text>
       </View>
     </>
