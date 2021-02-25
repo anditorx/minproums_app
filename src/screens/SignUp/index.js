@@ -42,7 +42,7 @@ const SignUp = ({navigation}) => {
           <Gap height={30} />
           <Button
             text="Lanjut"
-            onPress={() => navigation.navigate('SignUpAddress')}
+            onPress={() => navigation.replace('SignUpAddress')}
           />
           <Gap height={50} />
         </ScrollView>

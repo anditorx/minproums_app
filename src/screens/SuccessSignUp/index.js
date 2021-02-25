@@ -16,7 +16,10 @@ const SuccessSignUp = ({navigation}) => {
         </View>
         <Gap height={40} />
         <View style={styles.wrappingBtn}>
-          <Button text="Lanjutkan" />
+          <Button
+            text="Lanjutkan"
+            onPress={() => navigation.replace('MainApp')}
+          />
         </View>
       </View>
     </>
