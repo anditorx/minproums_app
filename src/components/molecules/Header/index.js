@@ -1,13 +1,24 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ICArrowBackBlackSVG} from '../../../assets';
 import {Fonts} from '../../../utils';
 import {Colors} from '../../../utils/Colors';
 
-const Header = ({title, subTitle}) => {
+const Header = ({title, subTitle, type, onPressBack, withIconBack}) => {
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subTitle}>{subTitle}</Text>
+      {withIconBack && (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={onPressBack}
+          style={styles.wrapperIconBack}>
+          <ICArrowBackBlackSVG />
+        </TouchableOpacity>
+      )}
+      <View>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subTitle}>{subTitle}</Text>
+      </View>
     </View>
   );
 };
@@ -20,6 +31,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 30,
     paddingBottom: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  wrapperIconBack: {
+    backgroundColor: Colors.white,
+    padding: 16,
+    marginRight: 16,
+    marginLeft: -10,
   },
   title: {
     fontSize: 22,

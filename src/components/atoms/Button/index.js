@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Colors, Fonts} from '../../../utils';
 
-const Button = ({text, disable}) => {
+const Button = ({text, disable, onPress}) => {
   if (disable) {
     return (
       <View style={styles.wrapper(disable)}>
@@ -12,7 +12,7 @@ const Button = ({text, disable}) => {
   }
 
   return (
-    <TouchableOpacity style={styles.wrapper(disable)}>
+    <TouchableOpacity onPress={onPress} style={styles.wrapper(disable)}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );

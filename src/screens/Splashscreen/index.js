@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {ILLogoSVG} from '../../assets';
 import {Gap} from '../../components';
 import {Colors, Fonts} from '../../utils';
 
-const Slashscreen = () => {
+const Slashscreen = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('SignIn');
+    }, 2000);
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.primary} />
