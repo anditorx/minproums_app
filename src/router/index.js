@@ -1,6 +1,12 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {SignIn, SignUp, SignUpAddress, Splashscreen} from '../screens';
+import {
+  SignIn,
+  SignUp,
+  SignUpAddress,
+  Splashscreen,
+  SuccessSignUp,
+} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +31,11 @@ const Router = () => {
       <Stack.Screen
         name="SignUpAddress"
         component={SignUpAddress}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SuccessSignUp"
+        component={SuccessSignUp}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

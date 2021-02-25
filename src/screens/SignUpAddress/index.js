@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Button, Gap, Header, TextInput} from '../../components';
+import {Button, Gap, Header, SelectOption, TextInput} from '../../components';
 import {Colors, Fonts} from '../../utils';
 
 const SignUpAddress = ({navigation}) => {
@@ -22,7 +22,8 @@ const SignUpAddress = ({navigation}) => {
           subTitle="Lengkapi data diri Anda"
         />
         <ScrollView style={styles.container}>
-          <TextInput label="Jenis Kelamin" placeholder="Masukkan Nama Anda" />
+          {/* <TextInput label="Jenis Kelamin" placeholder="Masukkan Nama Anda" /> */}
+          <SelectOption label="Jenis Kelamin" />
           <Gap height={17} />
           <TextInput label="Alamat" placeholder="Masukkan Alamat Anda" />
           <Gap height={17} />
@@ -31,9 +32,13 @@ const SignUpAddress = ({navigation}) => {
             placeholder="Masukkan No. Handphone Anda"
           />
           <Gap height={17} />
-          <TextInput label="Kota" placeholder="Kota" />
+          {/* <TextInput label="Kota" placeholder="Kota" /> */}
+          <SelectOption label="Kota" />
           <Gap height={30} />
-          <Button text="Daftar" />
+          <Button
+            text="Daftar"
+            onPress={() => navigation.replace('SuccessSignUp')}
+          />
           <Gap height={50} />
         </ScrollView>
       </View>
