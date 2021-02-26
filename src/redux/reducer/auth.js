@@ -1,11 +1,11 @@
-const initialStateRegister = {
+const initialStateAuth = {
   name: '',
   email: '',
   password: '',
   password_confirmation: '',
 };
 
-export const registerReducer = (state = initialStateRegister, action) => {
+export const authReducer = (state = initialStateAuth, action) => {
   if (action.type === 'SET_REGISTER') {
     return {
       ...state,

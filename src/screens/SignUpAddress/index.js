@@ -11,6 +11,7 @@ import {Button, Gap, Header, SelectOption, TextInput} from '../../components';
 import {Colors, FlashMessage, Fonts, useForm} from '../../utils';
 import {useSelector, useDispatch} from 'react-redux';
 import Axios from 'axios';
+import {UrlAPI} from '../../config';
 
 const SignUpAddress = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -19,23 +20,25 @@ const SignUpAddress = ({navigation}) => {
     phone_number: '',
     city: '',
   });
-  const registerState = useSelector((state) => state.registerReducer);
   const dispatch = useDispatch();
-
+  const registerState = useSelector((state) => state.authReducer);
   const onPressSubmit = () => {
     const dataUser = {
       ...form,
       ...registerState,
     };
     console.log('Data Register : ', dataUser);
-    Axios.post('http://192.168.1.9:8000/api/register', dataUser)
+    dispatch({type: 'SET_LOADING', value: true});
+    Axios.post(`${UrlAPI}/register`, dataUser)
       .then((res) => {
         console.log('signup success : ', res.data);
+        dispatch({type: 'SET_LOADING', value: false});
         FlashMessage('Sukses', 'Register berhasil!', 'success');
         navigation.replace('SuccessSignUp');
       })
       .catch((err) => {
         console.log('sugnup error : ', JSON.stringify(err));
+        dispatch({type: 'SET_LOADING', value: false});
         FlashMessage('Gagal', 'Register gagal!');
       });
   };

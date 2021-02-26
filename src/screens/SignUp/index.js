@@ -12,7 +12,6 @@ import {Colors, Fonts, useForm} from '../../utils';
 import {useSelector, useDispatch} from 'react-redux';
 
 const SignUp = ({navigation}) => {
-  const globalState = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
   const [form, setForm] = useForm({
     email: '',
