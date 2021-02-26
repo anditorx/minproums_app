@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Image,
   ImageBackground,
   StyleSheet,
@@ -8,10 +9,29 @@ import {
   View,
 } from 'react-native';
 import {DumSmartTVCello, ICArrowBackWhiteSVG} from '../../assets';
-import {Colors, Fonts} from '../../utils';
-import {Button, Gap} from '../../components';
+import {Colors, FlashMessage, Fonts} from '../../utils';
+import {Button, Counter, Gap} from '../../components';
 
 const ProductDetail = ({navigation}) => {
+  // const addToCart = () => {
+  //   // FlashMessage('Success', 'Menambahkan ke keranjang', 'info');
+  //   Alert
+  // };
+  const addToChart = () =>
+    Alert.alert(
+      'Berhasil',
+      'Barang berhasil ditambahkan ke keranjang Anda.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
+
   return (
     <View style={styles.page}>
       <ImageBackground source={DumSmartTVCello} style={styles.coverImg}>
@@ -23,8 +43,15 @@ const ProductDetail = ({navigation}) => {
       </ImageBackground>
       <View style={styles.content}>
         <View style={styles.mainContent}>
-          <Text style={styles.title}>Title</Text>
-          <Text style={styles.label}>Alat Tulis Kantor</Text>
+          <View style={styles.productCounter}>
+            <View>
+              <Text style={styles.title}>Title</Text>
+              <Text style={styles.label}>Alat Tulis Kantor</Text>
+            </View>
+            <View>
+              <Counter />
+            </View>
+          </View>
           <Gap height={15} />
           <Text style={styles.desc}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -39,7 +66,11 @@ const ProductDetail = ({navigation}) => {
             <Text style={styles.title}>Rp50.000</Text>
           </View>
           <View style={styles.wrapperBtn}>
-            <Button text="Beli Sekarang" />
+            <Button
+              type="shopping-cart"
+              text="Masukkan ke Keranjang"
+              onPress={addToChart}
+            />
           </View>
         </View>
       </View>
@@ -78,6 +109,11 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     elevation: 20,
   },
+  productCounter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   mainContent: {flex: 1},
   title: {
     fontSize: 24,
@@ -102,6 +138,6 @@ const styles = StyleSheet.create({
   },
   wrapperPrice: {flex: 1},
   wrapperBtn: {
-    width: 165,
+    width: 100,
   },
 });

@@ -7,6 +7,9 @@ import Home from './Home';
 import Order from './Order';
 import Profile from './Profile';
 import ProductDetail from './ProductDetail';
+import OrderSummary from './OrderSummary';
+import PaymentConfirmation from './PaymentConfirmation';
+import PaymentSuccess from './PaymentSuccess';
 
 export {
   Splashscreen,
@@ -18,4 +21,7 @@ export {
   Order,
   Profile,
   ProductDetail,
+  OrderSummary,
+  PaymentConfirmation,
+  PaymentSuccess,
 };

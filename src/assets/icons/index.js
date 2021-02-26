@@ -6,6 +6,10 @@ import ICOrderOff from './ic-order-off.svg';
 import ICOrderOn from './ic-order-on.svg';
 import ICProfileOff from './ic-profile-off.svg';
 import ICProfileOn from './ic-profile-on.svg';
+import ICCartWhite from './ic-cart-white.svg';
+import ICCounterAdd from './ic-counter-add.svg';
+import ICCounterMin from './ic-counter-min.svg';
+import ICArrowRight from './ic-arrow-right-grey.svg';
 
 export {
   ICArrowBackBlackSVG,
@@ -16,4 +20,8 @@ export {
   ICOrderOn,
   ICProfileOff,
   ICProfileOn,
+  ICCartWhite,
+  ICCounterAdd,
+  ICCounterMin,
+  ICArrowRight,
 };

@@ -10,6 +10,9 @@ import {
   Order,
   Profile,
   ProductDetail,
+  OrderSummary,
+  PaymentConfirmation,
+  PaymentSuccess,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -63,6 +66,21 @@ const Router = () => {
       <Stack.Screen
         name="ProductDetail"
         component={ProductDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderSummary"
+        component={OrderSummary}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PaymentConfirmation"
+        component={PaymentConfirmation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PaymentSuccess"
+        component={PaymentSuccess}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

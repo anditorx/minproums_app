@@ -1,8 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ICCartWhite} from '../../../assets';
 import {Colors, Fonts} from '../../../utils';
 
-const Button = ({text, disable, onPress}) => {
+const Button = ({text, disable, onPress, type}) => {
+  if (type === 'shopping-cart') {
+    return (
+      <TouchableOpacity onPress={onPress} style={styles.wrapperBtnCart}>
+        <ICCartWhite />
+      </TouchableOpacity>
+    );
+  }
+
   if (disable) {
     return (
       <View style={styles.wrapper(disable)}>
@@ -31,5 +40,18 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.mediumPoppins,
     color: Colors.black,
     textAlign: 'center',
+  },
+  textForCart: {
+    fontSize: 13,
+    fontFamily: Fonts.mediumPoppins,
+    color: Colors.black,
+    textAlign: 'center',
+  },
+  wrapperBtnCart: {
+    backgroundColor: Colors.primary,
+    padding: 12,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

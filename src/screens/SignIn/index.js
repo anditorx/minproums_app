@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -8,19 +8,40 @@ import {
 } from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../components';
 import {Colors} from '../../utils/Colors';
+import {useForm} from '../../utils';
 
 const SignIn = ({navigation}) => {
+  const [form, setForm] = useForm({
+    email: '',
+    password: '',
+  });
+
+  const onPressSubmit = () => {
+    console.log('form : ', form);
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
       <View style={styles.screen}>
         <Header title="Masuk" subTitle="Dapatkan produk terbaik untuk Anda" />
         <View style={styles.container}>
-          <TextInput label="Email" placeholder="Masukkan Email Anda" />
+          <TextInput
+            label="Email"
+            placeholder="Masukkan Email Anda"
+            value={form.email}
+            onChangeText={(value) => setForm('email', value)}
+          />
           <Gap height={17} />
-          <TextInput label="Password" placeholder="Masukkan Password Anda" />
+          <TextInput
+            label="Password"
+            placeholder="Masukkan Password Anda"
+            value={form.password}
+            onChangeText={(value) => setForm('password', value)}
+            secureTextEntry
+          />
           <Gap height={50} />
-          <Button text="Masuk" />
+          <Button text="Masuk" onPress={onPressSubmit} />
           <Gap height={25} />
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.textRegister}>Belum punya akun? Daftar</Text>
