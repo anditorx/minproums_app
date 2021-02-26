@@ -12,6 +12,7 @@ const TextInput = ({label, placeholder, type, ...props}) => {
           multiline={true}
           style={styles.inputTextArea}
           placeholder={placeholder}
+          {...props}
         />
       </View>
     );

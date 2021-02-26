@@ -18,7 +18,6 @@ const SignIn = ({navigation}) => {
   });
 
   const onPressSubmit = () => {
-    console.log('form : ', form);
     Axios.post('http://192.168.1.9:8000/api/login', form)
       .then((res) => {
         console.log('success : ', res);

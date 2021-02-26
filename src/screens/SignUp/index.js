@@ -8,12 +8,24 @@ import {
   View,
 } from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../components';
-import {Colors, Fonts} from '../../utils';
-import {useSelector} from 'react-redux';
+import {Colors, Fonts, useForm} from '../../utils';
+import {useSelector, useDispatch} from 'react-redux';
 
 const SignUp = ({navigation}) => {
   const globalState = useSelector((state) => state.globalReducer);
-  console.log(globalState);
+  const dispatch = useDispatch();
+  const [form, setForm] = useForm({
+    email: '',
+    name: '',
+    password: '',
+    // password_confirmation: '',
+  });
+
+  const onPressSubmit = () => {
+    // console.log('form : ', form);
+    dispatch({type: 'SET_REGISTER', value: form});
+    navigation.navigate('SignUpAddress');
+  };
 
   return (
     <>
@@ -25,7 +37,9 @@ const SignUp = ({navigation}) => {
           title="Daftar"
           subTitle="Buat akun Anda"
         />
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.photo}>
             <TouchableOpacity style={styles.borderPhoto}>
               <View style={styles.photoWrapper}>
@@ -33,21 +47,41 @@ const SignUp = ({navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
-          <TextInput label="Nama" placeholder="Masukkan Nama Anda" />
-          <Gap height={17} />
-          <TextInput label="Email" placeholder="Masukkan Email Anda" />
-          <Gap height={17} />
-          <TextInput label="Password" placeholder="Masukkan Password Anda" />
+          <TextInput
+            label="Nama"
+            placeholder="Masukkan Nama Anda"
+            value={form.name}
+            onChangeText={(value) => setForm('name', value)}
+          />
           <Gap height={17} />
           <TextInput
-            label="Konfirmasi Password"
-            placeholder="Konfirmasi Password Anda"
+            label="Email"
+            placeholder="Masukkan Email Anda"
+            value={form.email}
+            onChangeText={(value) => setForm('email', value)}
           />
+          <Gap height={17} />
+          <TextInput
+            label="Password"
+            placeholder="Masukkan Password Anda"
+            secureTextEntry
+            value={form.password}
+            onChangeText={(value) => setForm('password', value)}
+          />
+          {form.password.length < 6 && (
+            <Text style={styles.noteForPassword}>
+              *password minimal 6 karakter
+            </Text>
+          )}
           <Gap height={30} />
-          <Button
-            text="Lanjut"
-            onPress={() => navigation.replace('SignUpAddress')}
-          />
+          {form.email !== '' &&
+          form.name !== '' &&
+          form.password !== '' &&
+          form.password.length > 5 ? (
+            <Button text="Lanjut" onPress={onPressSubmit} />
+          ) : (
+            <Button text="Lanjut" disable />
+          )}
           <Gap height={50} />
         </ScrollView>
       </View>
@@ -99,5 +133,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.lightPoppins,
     color: Colors.greyLight2,
     textAlign: 'center',
+  },
+  noteForPassword: {
+    fontSize: 12,
+    fontFamily: Fonts.lightPoppins,
+    color: Colors.greyLight2,
   },
 });

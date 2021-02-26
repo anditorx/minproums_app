@@ -1,6 +1,7 @@
 const initialStateGlobal = {
   isError: false,
   message: 'Error',
+  invoice: '',
 };
 
 export const globalReducer = (state = initialStateGlobal, action) => {
@@ -9,6 +10,7 @@ export const globalReducer = (state = initialStateGlobal, action) => {
       ...state,
       isError: action.value.isError,
       message: action.value.message,
+      invoice: action.value.invoice,
     };
   }
 

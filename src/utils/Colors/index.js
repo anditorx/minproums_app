@@ -1,6 +1,7 @@
 const mainColors = {
   white: 'white',
   black: '#000000',
+  red: '#D9435E',
   blackLowOppacity: 'rgba(0,0,0,0.5)',
   greyDark: '#858587',
   greyLight: '#dfe4ea',
@@ -12,6 +13,7 @@ export const Colors = {
   primary: mainColors.primary,
   body: mainColors.body,
   white: mainColors.white,
+  red: mainColors.red,
   black: mainColors.black,
   greyDark: mainColors.greyDark,
   greyLight: mainColors.greyLight,

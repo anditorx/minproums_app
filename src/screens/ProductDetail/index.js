@@ -17,7 +17,7 @@ const ProductDetail = ({navigation}) => {
   //   // FlashMessage('Success', 'Menambahkan ke keranjang', 'info');
   //   Alert
   // };
-  const addToChart = () =>
+  const addToCart = () =>
     Alert.alert(
       'Berhasil',
       'Barang berhasil ditambahkan ke keranjang Anda.',
@@ -69,7 +69,7 @@ const ProductDetail = ({navigation}) => {
             <Button
               type="shopping-cart"
               text="Masukkan ke Keranjang"
-              onPress={addToChart}
+              onPress={addToCart}
             />
           </View>
         </View>
