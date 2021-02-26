@@ -9,6 +9,7 @@ import {
   Home,
   Order,
   Profile,
+  ProductDetail,
 } from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -57,6 +58,11 @@ const Router = () => {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ProductDetail"
+        component={ProductDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
