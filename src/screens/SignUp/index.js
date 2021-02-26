@@ -9,8 +9,12 @@ import {
 } from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../components';
 import {Colors, Fonts} from '../../utils';
+import {useSelector} from 'react-redux';
 
 const SignUp = ({navigation}) => {
+  const globalState = useSelector((state) => state.globalReducer);
+  console.log(globalState);
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />

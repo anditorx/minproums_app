@@ -9,6 +9,7 @@ import {
 import {Button, Gap, Header, TextInput} from '../../components';
 import {Colors} from '../../utils/Colors';
 import {useForm} from '../../utils';
+import Axios from 'axios';
 
 const SignIn = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -18,6 +19,13 @@ const SignIn = ({navigation}) => {
 
   const onPressSubmit = () => {
     console.log('form : ', form);
+    Axios.post('http://192.168.1.9:8000/api/login', form)
+      .then((res) => {
+        console.log('success : ', res);
+      })
+      .catch((err) => {
+        console.log('error : ', JSON.stringify(err));
+      });
   };
 
   return (
