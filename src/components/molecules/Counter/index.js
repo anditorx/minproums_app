@@ -1,16 +1,36 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ICCounterAdd, ICCounterMin} from '../../../assets';
 import {Colors, Fonts} from '../../../utils';
 
-const Counter = () => {
+const Counter = ({onValueChange}) => {
+  const [value, setValue] = useState(1);
+
+  useEffect(() => {
+    onValueChange(value);
+  }, []);
+
+  const onCount = (type) => {
+    let result = value;
+    if (type === 'plus') {
+      result = value + 1;
+    }
+    if (type === 'minus') {
+      if (value > 1) {
+        result = value - 1;
+      }
+    }
+    setValue(result);
+    onValueChange(result);
+  };
+
   return (
     <View style={styles.wrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onCount('minus')}>
         <ICCounterMin />
       </TouchableOpacity>
-      <Text style={styles.value}>1</Text>
-      <TouchableOpacity>
+      <Text style={styles.value}>{value}</Text>
+      <TouchableOpacity onPress={() => onCount('plus')}>
         <ICCounterAdd />
       </TouchableOpacity>
     </View>

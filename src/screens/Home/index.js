@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   ScrollView,
@@ -7,86 +7,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, Fonts} from '../../utils';
+import {Colors, Fonts, formatRupiah} from '../../utils';
 import {ILNoProfilePictPNG} from '../../assets/illustrations';
 import {Gap, Header, ProductCard} from '../../components';
 import {DumLaptopAsus, DumUsbSandisk} from '../../assets';
+import {useDispatch, useSelector} from 'react-redux';
+import {getDataProduct, getDataProductByCategory} from '../../redux/action';
+import {API_HOST} from '../../config';
 
 const Home = ({navigation}) => {
+  const {product, atk, rumah_tangga, elektronik, masak} = useSelector(
+    (state) => state.homeReducer,
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(getDataProduct());
+    dispatch(getDataProductByCategory('atk', 30));
+    dispatch(getDataProductByCategory('rt', 30));
+    dispatch(getDataProductByCategory('elektronik', 30));
+    dispatch(getDataProductByCategory('masak', 30));
+    console.log('state : ', product);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header type="header-homescreen" />
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Top Rekomendasi */}
-        <View style={styles.wrapperSlider}>
-          <Text style={styles.txtTitleWrapper}>Top Rekomendasi</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.slider}>
-            <Gap width={24} />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <Gap width={20} />
-          </ScrollView>
-        </View>
-        {/* ATK */}
-        <View style={styles.wrapperSlider}>
-          <Text style={styles.txtTitleWrapper}>Alat Tulis Kantor</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.slider}>
-            <Gap width={24} />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <Gap width={20} />
-          </ScrollView>
-        </View>
         {/* Rumah Tangga */}
         <View style={styles.wrapperSlider}>
           <Text style={styles.txtTitleWrapper}>Rumah Tangga</Text>
@@ -95,30 +41,19 @@ const Home = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             style={styles.slider}>
             <Gap width={24} />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
+            {rumah_tangga.map((item) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  onPress={() => navigation.navigate('ProductDetail', item)}
+                  image={{
+                    uri: `${API_HOST.base_url}/storage/${item.picture_path}`,
+                  }}
+                  name={item.name}
+                  price={formatRupiah(item.price)}
+                />
+              );
+            })}
             <Gap width={20} />
           </ScrollView>
         </View>
@@ -130,30 +65,19 @@ const Home = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             style={styles.slider}>
             <Gap width={24} />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
+            {masak.map((item) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  onPress={() => navigation.navigate('ProductDetail', item)}
+                  image={{
+                    uri: `${API_HOST.base_url}/storage/${item.picture_path}`,
+                  }}
+                  name={item.name}
+                  price={formatRupiah(item.price)}
+                />
+              );
+            })}
             <Gap width={20} />
           </ScrollView>
         </View>
@@ -165,80 +89,46 @@ const Home = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             style={styles.slider}>
             <Gap width={24} />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumLaptopAsus}
-              name="Laptop Asus AMD FX Ram 4GB HDD 500GB"
-              price="6.500.000"
-            />
-            <ProductCard
-              onPress={() => navigation.navigate('ProductDetail')}
-              image={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="50.000"
-            />
+            {elektronik.map((item) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  onPress={() => navigation.navigate('ProductDetail', item)}
+                  image={{
+                    uri: `${API_HOST.base_url}/storage/${item.picture_path}`,
+                  }}
+                  name={item.name}
+                  price={formatRupiah(item.price)}
+                />
+              );
+            })}
             <Gap width={20} />
           </ScrollView>
         </View>
-        {/* <View
-          style={{
-            backgroundColor: 'white',
-            alignItems: 'flex-start',
-            paddingTop: 0,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            paddingLeft: 24,
-          }}>
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-          <ProductCard
-            onPress={() => navigation.navigate('ProductDetail')}
-            image={DumUsbSandisk}
-            name="USB Sandisk 16GB"
-            price="50.000"
-          />
-        </View> */}
-        {/* <Gap height={50} /> */}
+        {/* ATK */}
+        <View style={styles.wrapperSlider}>
+          <Text style={styles.txtTitleWrapper}>Alat Tulis Kantor</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.slider}>
+            <Gap width={24} />
+            {atk.map((item) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  onPress={() => navigation.navigate('ProductDetail', item)}
+                  image={{
+                    uri: `${API_HOST.base_url}/storage/${item.picture_path}`,
+                  }}
+                  name={item.name}
+                  price={formatRupiah(item.price)}
+                />
+              );
+            })}
+            <Gap width={20} />
+          </ScrollView>
+        </View>
       </ScrollView>
     </View>
   );

@@ -2,12 +2,18 @@ import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {ILLogoSVG} from '../../assets';
 import {Gap} from '../../components';
-import {Colors, Fonts} from '../../utils';
+import {Colors, Fonts, getDataStorage} from '../../utils';
 
 const Slashscreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('SignIn');
+      getDataStorage('token').then((res) => {
+        if (res) {
+          navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+        } else {
+          navigation.replace('SignIn');
+        }
+      });
     }, 2000);
   }, []);
 

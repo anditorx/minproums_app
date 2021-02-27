@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import {ICArrowBackBlackSVG, ILNoProfilePictPNG} from '../../../assets';
-import {Fonts, getData} from '../../../utils';
+import {Fonts, getDataStorage} from '../../../utils';
 import {Colors} from '../../../utils/Colors';
 
 const Header = ({title, subTitle, type, onPressBack, withIconBack}) => {
   const [photo, setPhoto] = useState(ILNoProfilePictPNG);
   useEffect(() => {
-    getData('userProfile').then((res) => {
-      console.log('userProfile : ', res);
-      setPhoto({uri: res.profile_photo_url});
+    getDataStorage('userProfile').then((res) => {
+      console.log('res : ', res);
+      if (res) {
+        setPhoto({uri: res.profile_photo_url});
+      }
     });
   }, []);
 

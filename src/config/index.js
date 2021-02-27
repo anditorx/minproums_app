@@ -1,1 +1,1 @@
-export * from './UrlAPI';
+export * from './API';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Image,
@@ -9,32 +9,30 @@ import {
   View,
 } from 'react-native';
 import {DumSmartTVCello, ICArrowBackWhiteSVG} from '../../assets';
-import {Colors, FlashMessage, Fonts} from '../../utils';
+import {Colors, FlashMessage, Fonts, formatRupiah} from '../../utils';
 import {Button, Counter, Gap} from '../../components';
+import {API_HOST} from '../../config';
 
-const ProductDetail = ({navigation}) => {
-  // const addToCart = () => {
-  //   // FlashMessage('Success', 'Menambahkan ke keranjang', 'info');
-  //   Alert
-  // };
-  const addToCart = () =>
-    Alert.alert(
-      'Berhasil',
-      'Barang berhasil ditambahkan ke keranjang Anda.',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
-    );
+const ProductDetail = ({navigation, route}) => {
+  const {name, category, price, picture_path} = route.params;
+  const [totalItem, setTotalItem] = useState(1);
+
+  const onCounterChange = (value) => {
+    console.log('counter', value);
+    setTotalItem(value);
+  };
+
+  const addToCart = () => {
+    FlashMessage('Success', 'Menambahkan ke keranjang', 'success');
+  };
 
   return (
     <View style={styles.page}>
-      <ImageBackground source={DumSmartTVCello} style={styles.coverImg}>
+      <ImageBackground
+        source={{
+          uri: `${API_HOST.base_url}/storage/${picture_path}`,
+        }}
+        style={styles.coverImg}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.btnBack}>
@@ -44,26 +42,27 @@ const ProductDetail = ({navigation}) => {
       <View style={styles.content}>
         <View style={styles.mainContent}>
           <View style={styles.productCounter}>
-            <View>
-              <Text style={styles.title}>Title</Text>
-              <Text style={styles.label}>Alat Tulis Kantor</Text>
+            <View style={{width: '70%'}}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.label}>{category}</Text>
             </View>
             <View>
-              <Counter />
+              <Counter onValueChange={onCounterChange} />
             </View>
           </View>
           <Gap height={15} />
           <Text style={styles.desc}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            ever since the 1500.
           </Text>
         </View>
         <View style={styles.footer}>
           <View style={styles.wrapperPrice}>
             <Text style={styles.label}>Harga</Text>
-            <Text style={styles.title}>Rp50.000</Text>
+            <Text style={styles.title}>
+              Rp{formatRupiah(totalItem * price)}
+            </Text>
           </View>
           <View style={styles.wrapperBtn}>
             <Button
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
   },
   mainContent: {flex: 1},
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: Fonts.mediumPoppins,
     color: Colors.black,
   },
@@ -124,6 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: Fonts.lightPoppins,
     color: Colors.greyLight2,
+    textTransform: 'uppercase',
   },
   desc: {
     fontSize: 14,

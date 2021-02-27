@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import {
   ScrollView,
@@ -10,7 +11,13 @@ import {
 import {Gap, List} from '../../components';
 import {Colors, Fonts} from '../../utils';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  const onPressSignOut = () => {
+    AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
+      navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+    });
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
@@ -32,7 +39,7 @@ const Profile = () => {
             <List type="list-profile" name="Bahasa" />
             <List type="list-profile" name="Beri Rating & Ulasan" />
             <List type="list-profile" name="Kontak Bantuan" />
-            <List type="list-profile" name="Keluar" />
+            <List type="list-profile" name="Keluar" onPress={onPressSignOut} />
           </View>
         </ScrollView>
       </View>

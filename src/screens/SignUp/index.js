@@ -38,9 +38,7 @@ const SignUp = ({navigation}) => {
         maxHeight: 200,
       },
       (response) => {
-        console.log('response ', response);
         if (response.didCancel || response.error) {
-          console.log('User cancelled image picker');
           FlashMessage('Oops!', 'You are cancelled select a photo.');
         } else {
           const source = {uri: response.uri};

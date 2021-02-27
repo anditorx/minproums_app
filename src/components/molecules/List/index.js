@@ -5,11 +5,11 @@ import {Colors, Fonts} from '../../../utils';
 import {Separator} from '../../atoms';
 import Counter from '../Counter';
 
-const List = ({photo, name, price, type}) => {
+const List = ({photo, name, price, type, onPress}) => {
   if (type == 'list-profile') {
     return (
       <>
-        <TouchableOpacity style={styles.listItemNoImg}>
+        <TouchableOpacity onPress={onPress} style={styles.listItemNoImg}>
           <View style={{flex: 1}}>
             <Text numberOfLines={1} style={styles.txtItemName}>
               {name}
