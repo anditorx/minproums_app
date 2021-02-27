@@ -9,7 +9,6 @@ import {Loading} from './components';
 
 const MainApp = () => {
   const {isLoading} = useSelector((state) => state.globalReducer);
-  console.log('isLoading : ', isLoading);
   return (
     <NavigationContainer>
       <Router />

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -8,10 +9,13 @@ import {
   View,
 } from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../components';
-import {Colors, Fonts, useForm} from '../../utils';
+import {Colors, FlashMessage, Fonts, useForm} from '../../utils';
 import {useSelector, useDispatch} from 'react-redux';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {ILNoProfilePictPNG} from '../../assets';
 
 const SignUp = ({navigation}) => {
+  const [photo, setPhoto] = useState('');
   const dispatch = useDispatch();
   const [form, setForm] = useForm({
     email: '',
@@ -24,6 +28,33 @@ const SignUp = ({navigation}) => {
     // console.log('form : ', form);
     dispatch({type: 'SET_REGISTER', value: form});
     navigation.navigate('SignUpAddress');
+  };
+
+  const addPhotoFromGallery = () => {
+    launchImageLibrary(
+      {
+        quality: 0.4,
+        maxWidth: 200,
+        maxHeight: 200,
+      },
+      (response) => {
+        console.log('response ', response);
+        if (response.didCancel || response.error) {
+          console.log('User cancelled image picker');
+          FlashMessage('Oops!', 'You are cancelled select a photo.');
+        } else {
+          const source = {uri: response.uri};
+          const dataImg = {
+            uri: response.uri,
+            type: response.type,
+            name: response.fileName,
+          };
+          setPhoto(source);
+          dispatch({type: 'SET_PHOTO', value: dataImg});
+          dispatch({type: 'SET_UPLOAD_STATUS', value: true});
+        }
+      },
+    );
   };
 
   return (
@@ -40,10 +71,20 @@ const SignUp = ({navigation}) => {
           style={styles.container}
           showsVerticalScrollIndicator={false}>
           <View style={styles.photo}>
-            <TouchableOpacity style={styles.borderPhoto}>
-              <View style={styles.photoWrapper}>
-                <Text style={styles.txtAddPhoto}>Add Foto</Text>
-              </View>
+            <TouchableOpacity
+              style={styles.borderPhoto}
+              onPress={addPhotoFromGallery}>
+              {photo !== '' ? (
+                <Image source={photo} style={styles.photoWrapper} />
+              ) : (
+                // <Image
+                //   source={ILNoProfilePictPNG}
+                //   style={styles.photoWrapper}
+                // />
+                <View style={styles.photoWrapper}>
+                  <Text style={styles.txtAddPhoto}>Add Foto</Text>
+                </View>
+              )}
             </TouchableOpacity>
           </View>
           <TextInput
@@ -123,14 +164,16 @@ const styles = StyleSheet.create({
   photoWrapper: {
     height: 90,
     width: 90,
-    borderRadius: 90,
+    borderRadius: 90 / 2,
     backgroundColor: Colors.greyLight,
-    padding: 24,
+    // padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   txtAddPhoto: {
     fontSize: 14,
     fontFamily: Fonts.lightPoppins,
-    color: Colors.greyLight2,
+    color: Colors.black,
     textAlign: 'center',
   },
   noteForPassword: {

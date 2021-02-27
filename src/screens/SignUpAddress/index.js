@@ -21,17 +21,34 @@ const SignUpAddress = ({navigation}) => {
     city: '',
   });
   const dispatch = useDispatch();
-  const registerState = useSelector((state) => state.authReducer);
+  const {authReducer, photoReducer} = useSelector((state) => state);
   const onPressSubmit = () => {
     const dataUser = {
       ...form,
-      ...registerState,
+      ...authReducer,
     };
-    console.log('Data Register : ', dataUser);
     dispatch({type: 'SET_LOADING', value: true});
     Axios.post(`${UrlAPI}/register`, dataUser)
       .then((res) => {
         console.log('signup success : ', res.data);
+        if (photoReducer.isUploadPhoto) {
+          const photoForUpload = new FormData();
+          photoForUpload.append('file', photoReducer);
+
+          Axios.post(`${UrlAPI}/user/photo`, photoForUpload, {
+            headers: {
+              Authorization: `${res.data.data.token_type} ${res.data.data.access_token}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+            .then((res) => {
+              console.log('response upload : ', res);
+            })
+            .catch((err) => {
+              console.log('response upload error : ', err);
+              FlashMessage('Oops!', 'Upload photo tidak berhasil');
+            });
+        }
         dispatch({type: 'SET_LOADING', value: false});
         FlashMessage('Sukses', 'Register berhasil!', 'success');
         navigation.replace('SuccessSignUp');

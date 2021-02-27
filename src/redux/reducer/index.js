@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import {authReducer} from './auth';
+import {authReducer, photoReducer} from './auth';
 import {globalReducer} from './global';
 
-const reducer = combineReducers({authReducer, globalReducer});
+const reducer = combineReducers({authReducer, photoReducer, globalReducer});
 export default reducer;
