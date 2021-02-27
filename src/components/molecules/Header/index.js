@@ -1,10 +1,31 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ICArrowBackBlackSVG} from '../../../assets';
-import {Fonts} from '../../../utils';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {ICArrowBackBlackSVG, ILNoProfilePictPNG} from '../../../assets';
+import {Fonts, getData} from '../../../utils';
 import {Colors} from '../../../utils/Colors';
 
 const Header = ({title, subTitle, type, onPressBack, withIconBack}) => {
+  const [photo, setPhoto] = useState(ILNoProfilePictPNG);
+  useEffect(() => {
+    getData('userProfile').then((res) => {
+      console.log('userProfile : ', res);
+      setPhoto({uri: res.profile_photo_url});
+    });
+  }, []);
+
+  if (type === 'header-homescreen') {
+    return (
+      <View style={styles.profileWrapper}>
+        <View>
+          <Text style={styles.appName}>USTORE</Text>
+          <Text style={styles.textWelcome}>Selamat datang di Toko kami</Text>
+        </View>
+        <TouchableOpacity>
+          <Image source={photo} style={styles.profile} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View style={styles.wrapper}>
       {withIconBack && (
@@ -49,5 +70,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: Fonts.lightPoppins,
     color: Colors.greyLight2,
+  },
+  profileWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingTop: 32,
+    paddingBottom: 24,
+    backgroundColor: Colors.white,
+  },
+  appName: {
+    fontSize: 24,
+    fontFamily: Fonts.boldPoppins,
+    color: Colors.black,
+  },
+  textWelcome: {
+    fontSize: 14,
+    fontFamily: Fonts.lightPoppins,
+    color: Colors.greyLight2,
+  },
+  profile: {
+    width: 50,
+    height: 50,
+    borderRadius: 50 / 2,
   },
 });

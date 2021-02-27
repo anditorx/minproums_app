@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, SelectOption, TextInput} from '../../components';
-import {Colors, FlashMessage, Fonts, useForm} from '../../utils';
+import {Colors, useForm} from '../../utils';
 import {useSelector, useDispatch} from 'react-redux';
-import Axios from 'axios';
-import {UrlAPI} from '../../config';
+import {registerAction, setLoading} from '../../redux/action';
 
 const SignUpAddress = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -27,37 +19,8 @@ const SignUpAddress = ({navigation}) => {
       ...form,
       ...authReducer,
     };
-    dispatch({type: 'SET_LOADING', value: true});
-    Axios.post(`${UrlAPI}/register`, dataUser)
-      .then((res) => {
-        console.log('signup success : ', res.data);
-        if (photoReducer.isUploadPhoto) {
-          const photoForUpload = new FormData();
-          photoForUpload.append('file', photoReducer);
-
-          Axios.post(`${UrlAPI}/user/photo`, photoForUpload, {
-            headers: {
-              Authorization: `${res.data.data.token_type} ${res.data.data.access_token}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-            .then((res) => {
-              console.log('response upload : ', res);
-            })
-            .catch((err) => {
-              console.log('response upload error : ', err);
-              FlashMessage('Oops!', 'Upload photo tidak berhasil');
-            });
-        }
-        dispatch({type: 'SET_LOADING', value: false});
-        FlashMessage('Sukses', 'Register berhasil!', 'success');
-        navigation.replace('SuccessSignUp');
-      })
-      .catch((err) => {
-        console.log('sugnup error : ', JSON.stringify(err));
-        dispatch({type: 'SET_LOADING', value: false});
-        FlashMessage('Gagal', 'Register gagal!');
-      });
+    dispatch(setLoading(true));
+    dispatch(registerAction(dataUser, photoReducer, navigation));
   };
 
   return (
@@ -71,7 +34,6 @@ const SignUpAddress = ({navigation}) => {
           subTitle="Lengkapi data diri Anda"
         />
         <ScrollView style={styles.container}>
-          {/* <TextInput label="Jenis Kelamin" placeholder="Masukkan Nama Anda" /> */}
           <SelectOption
             label="Jenis Kelamin"
             value={form.gender}

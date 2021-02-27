@@ -9,21 +9,13 @@ import {
 } from 'react-native';
 import {Colors, Fonts} from '../../utils';
 import {ILNoProfilePictPNG} from '../../assets/illustrations';
-import {Gap, ProductCard} from '../../components';
+import {Gap, Header, ProductCard} from '../../components';
 import {DumLaptopAsus, DumUsbSandisk} from '../../assets';
 
 const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.profileWrapper}>
-        <View>
-          <Text style={styles.appName}>USTORE</Text>
-          <Text style={styles.textWelcome}>Selamat datang di Toko kami</Text>
-        </View>
-        <TouchableOpacity>
-          <Image source={ILNoProfilePictPNG} style={styles.profile} />
-        </TouchableOpacity>
-      </View>
+      <Header type="header-homescreen" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Top Rekomendasi */}
         <View style={styles.wrapperSlider}>
@@ -259,29 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
   },
-  profileWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 32,
-    paddingBottom: 24,
-    backgroundColor: Colors.white,
-  },
-  profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 50 / 2,
-  },
-  appName: {
-    fontSize: 24,
-    fontFamily: Fonts.boldPoppins,
-    color: Colors.black,
-  },
-  textWelcome: {
-    fontSize: 14,
-    fontFamily: Fonts.lightPoppins,
-    color: Colors.greyLight2,
-  },
+
   wrapperSlider: {backgroundColor: 'white', height: 250},
   slider: {
     flexDirection: 'row',
