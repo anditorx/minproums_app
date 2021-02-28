@@ -6,9 +6,9 @@ import {Colors, Fonts} from '../../../utils';
 const Counter = ({onValueChange}) => {
   const [value, setValue] = useState(1);
 
-  useEffect(() => {
-    onValueChange(value);
-  }, []);
+  // useEffect(() => {
+  //   onValueChange(value);
+  // }, []);
 
   const onCount = (type) => {
     let result = value;

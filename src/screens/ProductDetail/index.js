@@ -9,21 +9,75 @@ import {
   View,
 } from 'react-native';
 import {DumSmartTVCello, ICArrowBackWhiteSVG} from '../../assets';
-import {Colors, FlashMessage, Fonts, formatRupiah} from '../../utils';
+import {
+  Colors,
+  FlashMessage,
+  Fonts,
+  formatRupiah,
+  getDataStorage,
+  storeDataStorage,
+  useForm,
+} from '../../utils';
 import {Button, Counter, Gap} from '../../components';
 import {API_HOST} from '../../config';
+import {transactionAction} from '../../redux/action';
+import {useDispatch} from 'react-redux';
 
 const ProductDetail = ({navigation, route}) => {
   const {name, category, price, picture_path} = route.params;
+  const dataItem = route.params;
+  const dispatch = useDispatch();
   const [totalItem, setTotalItem] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(price);
+  const [stateInvoice, setStateInvoice] = useState('');
+  const [dataUser, setDataUser] = useState(null);
+
+  useEffect(() => {
+    getDatauUserFromStorage();
+    getInvFromStorage();
+  }, []);
+
+  const getDatauUserFromStorage = () => {
+    getDataStorage('userProfile').then((res) => {
+      console.log(res);
+      setDataUser(res);
+    });
+  };
+
+  const getInvFromStorage = () => {
+    getDataStorage('invoice').then((res) => {
+      if (!res) {
+        let nohp = dataUser.phone_number;
+        let random = Math.floor(1000 + Math.random() * 9000);
+        let invoice = `INV-${nohp.substr(nohp.length - 4)}-${random}`;
+        setStateInvoice(invoice);
+        storeDataStorage('invoice', {
+          value: invoice,
+        });
+      } else {
+        setStateInvoice(res.value);
+      }
+    });
+  };
 
   const onCounterChange = (value) => {
-    console.log('counter', value);
     setTotalItem(value);
+    setTotalPrice(value * price);
   };
 
   const addToCart = () => {
+    const form = {
+      user_id: dataUser.id,
+      product_code: dataItem.code,
+      invoice: stateInvoice,
+      qty: totalItem,
+      product_price: price,
+      total: totalPrice,
+      status: 'ADD_TO_CART',
+    };
     FlashMessage('Success', 'Menambahkan ke keranjang', 'success');
+    // console.log('form : ', form);
+    dispatch(transactionAction(form));
   };
 
   return (

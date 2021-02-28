@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {authReducer, photoReducer} from './auth';
+import {authReducer, photoReducer, invoiceReducer} from './auth';
 import {globalReducer} from './global';
 import {homeReducer} from './home';
 
@@ -8,5 +8,6 @@ const reducer = combineReducers({
   photoReducer,
   globalReducer,
   homeReducer,
+  invoiceReducer,
 });
 export default reducer;

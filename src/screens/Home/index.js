@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, Fonts, formatRupiah} from '../../utils';
+import {Colors, Fonts, formatRupiah, getDataStorage} from '../../utils';
 import {ILNoProfilePictPNG} from '../../assets/illustrations';
 import {Gap, Header, ProductCard} from '../../components';
 import {DumLaptopAsus, DumUsbSandisk} from '../../assets';
@@ -21,13 +21,28 @@ const Home = ({navigation}) => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(getDataProduct());
+    // createInvoice();
     dispatch(getDataProductByCategory('atk', 30));
     dispatch(getDataProductByCategory('rt', 30));
     dispatch(getDataProductByCategory('elektronik', 30));
     dispatch(getDataProductByCategory('masak', 30));
     console.log('state : ', product);
   }, []);
+
+  const createInvoice = () => {
+    getDataStorage('invoice').then((res) => {
+      if (!res) {
+        getDataStorage('userProfile').then((res) => {
+          let nohp = res.phone_number;
+          let random = Math.floor(1000 + Math.random() * 9000);
+          let invoice = `INV-${nohp.substr(nohp.length - 4)}-${random}`;
+          storeDataStorage('invoice', {
+            value: invoice,
+          });
+        });
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>

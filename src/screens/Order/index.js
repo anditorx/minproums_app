@@ -31,36 +31,6 @@ const Order = ({navigation}) => {
               name="Smart TV Cello"
               price="4300.000"
             />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
-            <List
-              photo={DumUsbSandisk}
-              name="USB Sandisk 16GB"
-              price="45.000"
-            />
             <Gap height={15} />
           </View>
           <Gap height={10} />

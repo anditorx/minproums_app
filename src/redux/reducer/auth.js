@@ -45,3 +45,17 @@ export const photoReducer = (state = initialPhoto, action) => {
 
   return state;
 };
+const initialInvoice = {
+  invoice: '',
+};
+
+export const invoiceReducer = (state = initialInvoice, action) => {
+  if (action.type === 'SET_INVOICE') {
+    return {
+      ...state,
+      invoice: action.value.invoice,
+    };
+  }
+
+  return state;
+};
