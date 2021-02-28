@@ -45,7 +45,6 @@ export const registerAction = (dataRegister, photoReducer, navigation) => (
 };
 
 export const signInAction = (form, navigation) => (dispatch) => {
-  console.log(form);
   dispatch(setLoading(true));
   Axios.post(`${API_HOST.url}/login`, form)
     .then((res) => {
@@ -64,4 +63,8 @@ export const signInAction = (form, navigation) => (dispatch) => {
       dispatch(setLoading(false));
       FlashMessage('Gagal', 'Register gagal!');
     });
+};
+
+export const setToken = (value) => {
+  return {type: 'SET_TOKEN', value};
 };

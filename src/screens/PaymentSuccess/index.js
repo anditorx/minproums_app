@@ -16,7 +16,12 @@ const PaymentSuccess = ({navigation}) => {
         </View>
         <Gap height={40} />
         <View style={styles.wrappingBtn}>
-          <Button text="Lanjut" onPress={() => navigation.replace('MainApp')} />
+          <Button
+            text="Lanjut"
+            onPress={() =>
+              navigation.reset({index: 0, routes: [{name: 'SignIn'}]})
+            }
+          />
         </View>
       </View>
     </>

@@ -18,6 +18,18 @@ const TextInput = ({label, placeholder, type, ...props}) => {
     );
   }
 
+  if (type === 'textinput-item-cart') {
+    return (
+      <View>
+        <TextInputRN
+          style={styles.input}
+          placeholder={placeholder}
+          {...props}
+        />
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text style={styles.label}>{label}</Text>

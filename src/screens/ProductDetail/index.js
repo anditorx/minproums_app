@@ -20,10 +20,16 @@ import {
 } from '../../utils';
 import {Button, Counter, Gap} from '../../components';
 import {API_HOST} from '../../config';
-import {transactionAction} from '../../redux/action';
-import {useDispatch} from 'react-redux';
+import {
+  getItemCartAction,
+  setInvoice,
+  transactionAction,
+} from '../../redux/action';
+import {useDispatch, useSelector} from 'react-redux';
 
 const ProductDetail = ({navigation, route}) => {
+  const stateToken = useSelector((state) => state.tokenReducer);
+  const stateGlobalReducer = useSelector((state) => state.globalReducer);
   const {name, category, price, picture_path} = route.params;
   const dataItem = route.params;
   const dispatch = useDispatch();
@@ -51,11 +57,13 @@ const ProductDetail = ({navigation, route}) => {
         let random = Math.floor(1000 + Math.random() * 9000);
         let invoice = `INV-${nohp.substr(nohp.length - 4)}-${random}`;
         setStateInvoice(invoice);
+        dispatch(setInvoice(invoice));
         storeDataStorage('invoice', {
           value: invoice,
         });
       } else {
         setStateInvoice(res.value);
+        dispatch(setInvoice(res.value));
       }
     });
   };
@@ -75,9 +83,8 @@ const ProductDetail = ({navigation, route}) => {
       total: totalPrice,
       status: 'ADD_TO_CART',
     };
-    FlashMessage('Success', 'Menambahkan ke keranjang', 'success');
-    // console.log('form : ', form);
-    dispatch(transactionAction(form));
+    dispatch(transactionAction(form, stateToken.token, navigation));
+    dispatch(getItemCartAction(stateGlobalReducer.invoice, stateToken.token));
   };
 
   return (
@@ -101,7 +108,7 @@ const ProductDetail = ({navigation, route}) => {
               <Text style={styles.label}>{category}</Text>
             </View>
             <View>
-              <Counter onValueChange={onCounterChange} />
+              <Counter onValueChange={onCounterChange} val={1} />
             </View>
           </View>
           <Gap height={15} />

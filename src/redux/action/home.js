@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import {API_HOST} from '../../config';
+import {setLoading} from './global';
 
 export const getDataProduct = () => (dispatch) => {
   Axios.get(`${API_HOST.url}/product`)
@@ -12,6 +13,7 @@ export const getDataProduct = () => (dispatch) => {
     });
 };
 export const getDataProductByCategory = (category, limit) => (dispatch) => {
+  dispatch(setLoading(true));
   Axios.get(`${API_HOST.url}/product?category=${category}&limit=${limit}`)
     .then((res) => {
       // console.log('respon success : ', res.data.data.data);
@@ -27,8 +29,10 @@ export const getDataProductByCategory = (category, limit) => (dispatch) => {
       if (category === 'masak') {
         dispatch({type: 'SET_PRODUCT_MASAK', value: res.data.data.data});
       }
+      dispatch(setLoading(false));
     })
     .catch((err) => {
+      dispatch(setLoading(false));
       console.log('responErr : ', res);
     });
 };

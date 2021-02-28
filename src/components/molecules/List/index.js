@@ -1,11 +1,59 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ICArrowRight} from '../../../assets';
-import {Colors, Fonts} from '../../../utils';
-import {Separator} from '../../atoms';
+import {ICArrowRight, ICCounterAdd, ICCounterMin} from '../../../assets';
+import {Colors, Fonts, formatRupiah, useForm} from '../../../utils';
+import {Separator, TextInput} from '../../atoms';
 import Counter from '../Counter';
 
-const List = ({photo, name, price, type, onPress}) => {
+const List = ({
+  photo,
+  name,
+  price,
+  type,
+  onPress,
+  qty,
+  item,
+  invoice,
+  token,
+}) => {
+  const [totalItem, setTotalItem] = useState(qty);
+
+  const onCounterChange = (value) => {
+    setTotalItem(value);
+  };
+
+  if (type === 'list-item-cart') {
+    return (
+      <>
+        <View style={styles.listItem}>
+          <Image source={photo} style={styles.img} />
+          <View style={{flex: 1}}>
+            <Text numberOfLines={1} style={styles.txtItemName}>
+              {name}
+            </Text>
+            <Text style={styles.txtItemPrice}>
+              Rp{`${formatRupiah(price)}`}
+            </Text>
+          </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 50,
+            }}>
+            <TextInput
+              type="textinput-item-cart"
+              value={`${qty}`}
+              keyboardType="numeric"
+              onChangeText={(value) => setForm('qty', value)}
+            />
+          </View>
+        </View>
+        <Separator />
+      </>
+    );
+  }
+
   if (type == 'list-profile') {
     return (
       <>
@@ -32,10 +80,17 @@ const List = ({photo, name, price, type, onPress}) => {
           <Text numberOfLines={1} style={styles.txtItemName}>
             {name}
           </Text>
-          <Text style={styles.txtItemPrice}>Rp{price}</Text>
+          <Text style={styles.txtItemPrice}>Rp{`${formatRupiah(price)}`}</Text>
         </View>
         <View>
-          <Counter />
+          <Counter
+            onValueChange={onCounterChange}
+            val={qty}
+            type="counter-cart"
+            item={item}
+            invoice={invoice}
+            token={token}
+          />
         </View>
       </View>
       <Separator />
@@ -74,5 +129,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: Fonts.lightPoppins,
     color: Colors.greyLight2,
+  },
+  wrapperCounter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  valueCounter: {
+    fontSize: 16,
+    fontFamily: Fonts.regularPoppins,
+    color: Colors.black,
+    marginHorizontal: 15,
   },
 });

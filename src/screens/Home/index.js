@@ -12,7 +12,11 @@ import {ILNoProfilePictPNG} from '../../assets/illustrations';
 import {Gap, Header, ProductCard} from '../../components';
 import {DumLaptopAsus, DumUsbSandisk} from '../../assets';
 import {useDispatch, useSelector} from 'react-redux';
-import {getDataProduct, getDataProductByCategory} from '../../redux/action';
+import {
+  getDataProduct,
+  getDataProductByCategory,
+  setInvoice,
+} from '../../redux/action';
 import {API_HOST} from '../../config';
 
 const Home = ({navigation}) => {
@@ -21,7 +25,7 @@ const Home = ({navigation}) => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    // createInvoice();
+    createInvoice();
     dispatch(getDataProductByCategory('atk', 30));
     dispatch(getDataProductByCategory('rt', 30));
     dispatch(getDataProductByCategory('elektronik', 30));
@@ -31,15 +35,8 @@ const Home = ({navigation}) => {
 
   const createInvoice = () => {
     getDataStorage('invoice').then((res) => {
-      if (!res) {
-        getDataStorage('userProfile').then((res) => {
-          let nohp = res.phone_number;
-          let random = Math.floor(1000 + Math.random() * 9000);
-          let invoice = `INV-${nohp.substr(nohp.length - 4)}-${random}`;
-          storeDataStorage('invoice', {
-            value: invoice,
-          });
-        });
+      if (res) {
+        dispatch(setInvoice(res.value));
       }
     });
   };

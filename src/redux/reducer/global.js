@@ -22,7 +22,7 @@ export const globalReducer = (state = initialStateGlobal, action) => {
   if (action.type === 'SET_INVOICE') {
     return {
       ...state,
-      invoice: action.value.invoice,
+      invoice: action.value,
     };
   }
 

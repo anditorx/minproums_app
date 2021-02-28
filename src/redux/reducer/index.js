@@ -1,13 +1,16 @@
 import {combineReducers} from 'redux';
-import {authReducer, photoReducer, invoiceReducer} from './auth';
+import {authReducer, photoReducer, tokenReducer} from './auth';
 import {globalReducer} from './global';
 import {homeReducer} from './home';
+import {itemCartReducer, totalPriceReducer} from './transaction';
 
 const reducer = combineReducers({
   authReducer,
   photoReducer,
+  tokenReducer,
   globalReducer,
   homeReducer,
-  invoiceReducer,
+  itemCartReducer,
+  totalPriceReducer,
 });
 export default reducer;

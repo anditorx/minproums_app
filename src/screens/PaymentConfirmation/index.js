@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -7,32 +7,50 @@ import {
   View,
   Image,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {ILNoImg, ILNoImgSVG} from '../../assets';
 import {Button, Gap, Header, TextInput} from '../../components';
-import {Colors, Fonts} from '../../utils';
+import {getTotalPrice, paymentConfirmationAction} from '../../redux/action';
+import {Colors, Fonts, formatRupiah} from '../../utils';
 
 const PaymentConfirmation = ({navigation}) => {
+  const stateGlobalReducer = useSelector((state) => state.globalReducer);
+  const stateToken = useSelector((state) => state.tokenReducer);
+  const stateTotalPrice = useSelector((state) => state.totalPriceReducer);
   const [hasPhoto, setHasPhoto] = useState(null);
+  const [invoice, setInvoice] = useState(stateGlobalReducer.invoice);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    dispatch(getTotalPrice(invoice, stateToken.token, navigation));
+    console.log(stateTotalPrice);
+  };
+
+  const onPressConfirm = () => {
+    dispatch(paymentConfirmationAction(invoice, stateToken.token, navigation));
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
       <View style={styles.screen}>
-        <Header
-          withIconBack
-          onPressBack={() => navigation.goBack()}
-          title="Pembayaran"
-          subTitle="Konfirmasi Pembayaran Anda"
-        />
+        <Header title="Pembayaran" subTitle="Konfirmasi Pembayaran Anda" />
         <View style={styles.content}>
           <View>
             <Text style={styles.title}>Detail Pembayaran</Text>
             <View style={styles.wrapperTotal}>
               <Text style={styles.txtTotal}>Invoce</Text>
-              <Text style={styles.txtInvoice}>INV-2550801</Text>
+              <Text style={styles.txtInvoice}>{invoice}</Text>
             </View>
             <View style={styles.wrapperTotal}>
               <Text style={styles.txtTotal}>Total</Text>
-              <Text style={styles.txtPrice}>Rp50000</Text>
+              <Text style={styles.txtPrice}>
+                Rp{formatRupiah(stateTotalPrice.totalPrice)}
+              </Text>
             </View>
           </View>
           <View>
@@ -52,7 +70,8 @@ const PaymentConfirmation = ({navigation}) => {
           <View style={styles.wrappingBtn}>
             <Button
               text="Konfirmasi Pembayaran"
-              onPress={() => navigation.replace('PaymentSuccess')}
+              onPress={onPressConfirm}
+              // onPress={() => navigation.replace('PaymentSuccess')}
             />
           </View>
         </View>
