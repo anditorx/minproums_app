@@ -52,7 +52,8 @@ const ProductDetail = ({navigation, route}) => {
 
   const getInvFromStorage = () => {
     getDataStorage('invoice').then((res) => {
-      if (!res) {
+      console.log('resssss : ', res);
+      if (!res || res == null) {
         let nohp = dataUser.phone_number;
         let random = Math.floor(1000 + Math.random() * 9000);
         let invoice = `INV-${nohp.substr(nohp.length - 4)}-${random}`;

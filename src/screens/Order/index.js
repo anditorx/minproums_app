@@ -62,7 +62,7 @@ const Order = ({navigation}) => {
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
-            <Text style={styles.titleInvoice}>Item:</Text>
+            {invoice ? <Text style={styles.titleInvoice}>Item:</Text> : <></>}
             {cart.dataCart !== [] &&
               cart.dataCart.map((item) => (
                 <List
@@ -88,11 +88,7 @@ const Order = ({navigation}) => {
               <Text style={styles.txtValueInvoice}>{invoice}</Text>
             </View>
             <Gap height={15} />
-            <Button
-              text="Bayar"
-              onPress={onPressPayment}
-              // onPress={() => navigation.navigate('PaymentConfirmation')}
-            />
+            <Button text="Bayar" onPress={onPressPayment} />
           </View>
           <Gap height={15} />
         </ScrollView>

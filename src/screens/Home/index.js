@@ -36,6 +36,7 @@ const Home = ({navigation}) => {
   const createInvoice = () => {
     getDataStorage('invoice').then((res) => {
       if (res) {
+        console.log('res INVOICCEEEE : ', res);
         dispatch(setInvoice(res.value));
       }
     });
