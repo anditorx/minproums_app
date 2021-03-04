@@ -73,7 +73,10 @@ const SignUp = ({navigation}) => {
               style={styles.borderPhoto}
               onPress={addPhotoFromGallery}>
               {photo !== '' ? (
-                <Image source={photo} style={styles.photoWrapper} />
+                <Image
+                  source={userProfile.profile_photo_path}
+                  style={styles.photoWrapper}
+                />
               ) : (
                 // <Image
                 //   source={ILNoProfilePictPNG}

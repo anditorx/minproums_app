@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -9,9 +10,20 @@ import {
   View,
 } from 'react-native';
 import {Gap, List} from '../../components';
-import {Colors, Fonts} from '../../utils';
+import {API_HOST} from '../../config';
+import {Colors, Fonts, getDataStorage} from '../../utils';
 
 const Profile = ({navigation}) => {
+  const [photo, setPhoto] = useState('');
+  useEffect(() => {
+    getDataStorage('userProfile').then((res) => {
+      if (res) {
+        console.log('res: ', res);
+        setPhoto(`${API_HOST.base_url}/${res.profile_photo_path}`);
+      }
+    });
+  }, []);
+
   const onPressSignOut = () => {
     AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
       navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
@@ -24,11 +36,13 @@ const Profile = ({navigation}) => {
       <View style={styles.screen}>
         <ScrollView style={styles.container}>
           <View style={styles.photo}>
-            <TouchableOpacity style={styles.borderPhoto}>
+            {/* <TouchableOpacity style={styles.borderPhoto}>
               <View style={styles.photoWrapper}>
                 <Text style={styles.txtAddPhoto}>Add Foto</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            {console.log(photo)}
+            {/* <Image source={{uri: photo}} style={styles.borderPhoto} /> */}
             <Gap height={20} />
             <Text style={styles.name}>John Doe</Text>
             <Text style={styles.email}>johndoe@mail.com</Text>
@@ -67,12 +81,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   borderPhoto: {
-    borderWidth: 1,
-    borderColor: Colors.greyLight2,
+    // borderWidth: 1,
+    // borderColor: Colors.greyLight2,
     width: 110,
     height: 110,
     borderRadius: 110,
-    borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
   },
